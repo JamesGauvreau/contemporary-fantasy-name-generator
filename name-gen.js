@@ -9,21 +9,21 @@
 //  v2      Build diminutives from roots
 //  v3      Work with subtypes
 
-//  PSEUDO 
+//  ! PSEUDO 
 //  Check # of objects in super_array
 //  Roll random number based on # of objects in super_array
 //  Determine gender (Witch || Wizard) by random flip. 
 //  Access a particular object
 //  Check how many names in array (object_name.english_M or object_name.english_F)
-    //  If 1 name, pick it.
-    //  If 2 names, pick the second.
-    //  Else, Roll Math.random()
-        // If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
-        //  Else, Roll Math.ceil(Math.random() * names in array)
+    //  ? If 1 name, pick it.
+    //  ? If 2 names, pick the second.
+    //  * Else, Roll Math.random()
+        // ? If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
+        //  * Else, Roll Math.ceil(Math.random() * names in array)
             //  Use # to pick an option.
 
 //  TODO
-//  Paste objects into object sheet
+//  * Paste objects into object sheet
 //  Test
 //  Export
 //  Import into main js sheet
