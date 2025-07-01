@@ -21,4 +21,10 @@
         // If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
         //  Else, Roll Math.ceil(Math.random() * names in array)
             //  Use # to pick an option.
-        
+
+//  TODO
+//  Paste objects into object sheet
+//  Test
+//  Export
+//  Import into main js sheet
+//  Test
