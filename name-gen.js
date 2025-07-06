@@ -28,3 +28,8 @@
 //  Export
 //  Import into main js sheet
 //  Test
+
+import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
+
+// console.log(nameDennis_Denise.english_M[1]);
+console.log(allPrenomena[28].english_M[1]);
