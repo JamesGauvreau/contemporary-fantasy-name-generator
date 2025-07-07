@@ -35,19 +35,32 @@ import allPrenomena from './prenomen-list.js'; // All code in a file whose conte
 
 function callGender() {
     const rollGender = Math.floor(Math.random() * 2);
-    if (rollGender === 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return rollGender === 0;
 }
 
-function callPrenomen() {
-    const superArrayLength = allPrenomena.length;
-    return superArrayLength;  
+function filterPrenomena(allPrenomena, passValue = true) {
+    const targetSuffix = passValue ? "_M" : "_F";
 
-};
+    return allPrenomena.filter(entry => {
+        return Object.keys(entry).some(key => {
+            if (!key.endsWith(targetSuffix)) return false;
+
+            const value = entry[key];
+            return Array.isArray(value) && value.some(
+                v => typeof v === 'string' && v.trim() !== ''
+            );
+        });
+    });
+}
+
+
+function callPrenomen(allPrenomena) {
+    const gender = callGender(); // true = male, false = female
+    const filteredArray = filterPrenomena(allPrenomena, gender);
+    return filteredArray;
+}
 
 console.log(allPrenomena[28].english_M[1]);
+// console.log(filterPrenomena());
 console.log(callGender());
-console.log(callPrenomen());
+console.log(callPrenomen(allPrenomena));
