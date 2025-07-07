@@ -32,4 +32,22 @@
 import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
 
 // console.log(nameDennis_Denise.english_M[1]);
+
+function callGender() {
+    const rollGender = Math.floor(Math.random() * 2);
+    if (rollGender === 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function callPrenomen() {
+    const superArrayLength = allPrenomena.length;
+    return superArrayLength;  
+
+};
+
 console.log(allPrenomena[28].english_M[1]);
+console.log(callGender());
+console.log(callPrenomen());
