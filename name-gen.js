@@ -15,12 +15,12 @@
 //  Determine gender (Witch || Wizard) by random flip. 
 //  Access a particular object
 //  Check how many names in array (object_name.english_M or object_name.english_F)
-    //  ? If 1 name, pick it.
-    //  ? If 2 names, pick the second.
-    //  * Else, Roll Math.random()
-        // ? If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
-        //  * Else, Roll Math.ceil(Math.random() * names in array)
-            //  Use # to pick an option.
+//  ? If 1 name, pick it.
+//  ? If 2 names, pick the second.
+//  * Else, Roll Math.random()
+// ? If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
+//  * Else, Roll Math.ceil(Math.random() * names in array)
+//  Use # to pick an option.
 
 //  TODO
 //  * Paste objects into object sheet
@@ -36,31 +36,35 @@ import allPrenomena from './prenomen-list.js'; // All code in a file whose conte
 function callGender() {
     const rollGender = Math.floor(Math.random() * 2);
     return rollGender === 0;
+} // * callGender will return a value of true (masc) or false (fem), to be read by the isMale parameter in filterByGender.
+
+// ! We're making progress! The function below is accurately capturing the information we want to capture.
+
+function filterByGender(originalObject, isMale) { // the second parameter should refer to the output of callGender.
+    const genderSuffix = isMale ? '_M' : '_F';
+    const newObject = {};
+
+    for (const key in originalObject) {
+        if (key.endsWith(genderSuffix)) {
+            newObject[key] = originalObject[key];
+        }
+    }
+
+    return newObject;
 }
 
-function filterPrenomena(allPrenomena, passValue = true) {
-    const targetSuffix = passValue ? "_M" : "_F";
-
-    return allPrenomena.filter(entry => {
-        return Object.keys(entry).some(key => {
-            if (!key.endsWith(targetSuffix)) return false;
-
-            const value = entry[key];
-            return Array.isArray(value) && value.some(
-                v => typeof v === 'string' && v.trim() !== ''
-            );
-        });
-    });
-}
 
 
-function callPrenomen(allPrenomena) {
-    const gender = callGender(); // true = male, false = female
-    const filteredArray = filterPrenomena(allPrenomena, gender);
-    return filteredArray;
-}
+// function callPrenomen(allPrenomena) {
+//     const gender = callGender(); // true = male, false = female
+//     const filteredArray = filterPrenomena(allPrenomena, gender);
+//     return filteredArray;
+// }
 
+console.log(allPrenomena[28]);
+console.log(filterByGender(allPrenomena[28], false));
 console.log(allPrenomena[28].english_M[1]);
 // console.log(filterPrenomena());
 console.log(callGender());
-console.log(callPrenomen(allPrenomena));
+// console.log(filterPrenomena())
+// console.log(callPrenomen(allPrenomena));
