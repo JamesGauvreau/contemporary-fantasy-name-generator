@@ -53,8 +53,13 @@ function filterByGender(originalObject, isMale) { // the second parameter should
     return newObject;
 }
 
+function getNewObject() { // ! next thing is to randomly determine an object
+    const newObject = filterByGender(allPrenomena[Math.floor(Math.random() * allPrenomena.length)], false);
+    return newObject;
+}
 
 
+const test = filterByGender(allPrenomena[28], false);
 // function callPrenomen(allPrenomena) {
 //     const gender = callGender(); // true = male, false = female
 //     const filteredArray = filterPrenomena(allPrenomena, gender);
@@ -68,3 +73,5 @@ console.log(allPrenomena[28].english_M[1]);
 console.log(callGender());
 // console.log(filterPrenomena())
 // console.log(callPrenomen(allPrenomena));
+console.log("test");
+console.log(getNewObject());
