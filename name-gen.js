@@ -45,32 +45,45 @@ function filterByGender(originalObject, isMale) { // the second parameter should
     const newObject = {};
 
     for (const key in originalObject) {
+        // Check key ends with the appropriate gender suffix
         if (key.endsWith(genderSuffix)) {
-            newObject[key] = originalObject[key];
+            const value = originalObject[key];
+
+            // Check value is an array AND contains at least one string
+            if (Array.isArray(value) && value.some(item => typeof item === 'string')) {
+                newObject[key] = value; // Only assign if array includes strings
+            }
         }
     }
 
     return newObject;
 }
 
-function getNewObject() { // ! next thing is to randomly determine an object
+// ! Next thing is to check whether I'm making the code too convoluted (we want an easy way to refer to gender multiple times throughout the functions)
+// ! Single Responsibility Principle 
+
+function getNewObject() { 
     const newObject = filterByGender(allPrenomena[Math.floor(Math.random() * allPrenomena.length)], false);
     return newObject;
 }
 
 function getPrenomen() {
-    const prenomenArray = getNewObject().english_F;
-    const prenomenNumber = prenomenArray.length * Math.floor(Math.random());
-    const prenomenSelection = prenomenArray[prenomenNumber];
-    return prenomenSelection;
+    const prenomenArray = getNewObject();
+    return prenomenArray.english_F;
+    // const prenomenArray = getNewObject().english_F;
+    // const prenomenNumber = prenomenArray.length * Math.floor(Math.random());
+    // const prenomenSelection = prenomenArray[prenomenNumber];
+    // return prenomenSelection;
 }
 
-console.log(allPrenomena[28]);
-console.log(filterByGender(allPrenomena[28], false));
-console.log(allPrenomena[28].english_M[1]);
+// console.log(allPrenomena[28]);
+console.log(filterByGender(allPrenomena[26], true));
+// console.log(allPrenomena[28].english_M[1]);
 // console.log(filterPrenomena());
 console.log(callGender());
 // console.log(filterPrenomena())
 // console.log(callPrenomen(allPrenomena));
-console.log("test");
+console.log("getNewObject test:")
+console.log(getNewObject())
+console.log("getPrenomen test:")
 console.log(getPrenomen());
