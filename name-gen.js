@@ -31,12 +31,20 @@
 
 import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
 
+const allNations = ["english","cornish","french","irish","latin","scottish","welsh"];
+
 // console.log(nameDennis_Denise.english_M[1]);
 
 function callPrenomenObject() {
     const arrayLength = allPrenomena.length;
     const rollObject = Math.floor(Math.random() * arrayLength);
     return rollObject;
+}
+
+function callNation() {
+    const arrayLength = allNations.length;
+    const rollObject = Math.floor(Math.random() * arrayLength);
+    return allNations[rollObject];
 }
 
 function callGender() { // * callGender will return a value of true (masc) or false (fem), to be read by the isWizard parameter in filterByGender.
@@ -80,21 +88,25 @@ function filterByNation(originalObject, nation) { // the second parameter should
     return newObject;
 }
 
-const prenomenObjectNo = callPrenomenObject();
+const whichPrenomenObjectNo = callPrenomenObject();
+const whichNation = callNation();
 const isWizard = callGender();
-const nation = "english";
 
-console.log('--- Testing callPrenomen Object ---');
-console.log(callPrenomenObject());
 
-console.log('--- Testing callGender() ---');
-console.log(callGender());
+console.log('--- Testing const whichPrenomenObjectNo ---');
+console.log(whichPrenomenObjectNo);
 
-console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
-console.log(filterByGender(allPrenomena[prenomenObjectNo], isWizard))
+console.log('--- Testing const whichNation ---');
+console.log(whichNation);
 
-console.log('--- Testing filterByNation(originalObject, nation) ---');
-console.log(filterByNation(allPrenomena[prenomenObjectNo], nation));
+console.log('--- Testing const isWizard ---');
+console.log(isWizard);
+
+// console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
+// console.log(filterByGender(allPrenomena[prenomenObjectNo], isWizard))
+
+// console.log('--- Testing filterByNation(originalObject, nation) ---');
+// console.log(filterByNation(allPrenomena[prenomenObjectNo], nation));
 
 // ! Everything above is working well.
 // ! next step is align the two filters with each other.
