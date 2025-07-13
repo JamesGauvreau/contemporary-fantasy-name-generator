@@ -33,15 +33,18 @@ import allPrenomena from './prenomen-list.js'; // All code in a file whose conte
 
 // console.log(nameDennis_Denise.english_M[1]);
 
-function callGender() {
-    const rollGender = Math.floor(Math.random() * 2);
-    return rollGender === 0;
-} // * callGender will return a value of true (masc) or false (fem), to be read by the isMale parameter in filterByGender.
+function callPrenomenObject() {
+    const arrayLength = allPrenomena.length;
+    const rollObject = Math.floor(Math.random() * arrayLength);
+    return rollObject;
+}
 
-// ! We're making progress! The function below is accurately capturing the information we want to capture.
+function callGender() { // * callGender will return a value of true (masc) or false (fem), to be read by the isWizard parameter in filterByGender.
+    return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
+} 
 
-function filterByGender(originalObject, isMale) { // the second parameter should refer to the output of callGender.
-    const genderSuffix = isMale ? '_M' : '_F';
+function filterByGender(originalObject, isWizard) { // the second parameter should refer to the output of callGender.
+    const genderSuffix = isWizard ? '_M' : '_F';
     const newObject = {};
 
     for (const key in originalObject) {
@@ -59,31 +62,74 @@ function filterByGender(originalObject, isMale) { // the second parameter should
     return newObject;
 }
 
-// ! Next thing is to check whether I'm making the code too convoluted (we want an easy way to refer to gender multiple times throughout the functions)
-// ! Single Responsibility Principle 
+function filterByNation(originalObject, nation) { // the second parameter should refer to the output of callGender.
+    const newObject = {};
 
-function getNewObject() { 
-    const newObject = filterByGender(allPrenomena[Math.floor(Math.random() * allPrenomena.length)], false);
+    for (const key in originalObject) {
+        // Check key ends with the appropriate gender suffix
+        if (key.startsWith(nation)) {
+            const value = originalObject[key];
+
+            // Check value is an array AND contains at least one string
+            if (Array.isArray(value) && value.some(item => typeof item === 'string')) {
+                newObject[key] = value; // Only assign if array includes strings
+            }
+        }
+    }
+
     return newObject;
 }
 
-function getPrenomen() {
-    const prenomenArray = getNewObject();
-    return prenomenArray.english_F;
-    // const prenomenArray = getNewObject().english_F;
-    // const prenomenNumber = prenomenArray.length * Math.floor(Math.random());
-    // const prenomenSelection = prenomenArray[prenomenNumber];
-    // return prenomenSelection;
+const prenomenObjectNo = callPrenomenObject();
+const isWizard = callGender();
+const nation = "english";
+
+console.log('--- Testing callPrenomen Object ---');
+console.log(callPrenomenObject());
+
+console.log('--- Testing callGender() ---');
+console.log(callGender());
+
+console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
+console.log(filterByGender(allPrenomena[prenomenObjectNo], isWizard))
+
+console.log('--- Testing filterByNation(originalObject, nation) ---');
+console.log(filterByNation(allPrenomena[prenomenObjectNo], nation));
+
+// ! Everything above is working well.
+// ! next step is align the two filters with each other.
+
+
+
+
+
+
+function getRandomPrenomenSet() {
+    return allPrenomena[Math.floor(Math.random() * allPrenomena.length)];
 }
 
+function getNewObjectForGender(isWizard) {
+    const randomSet = getRandomPrenomenSet();
+    return filterByGender(randomSet, isWizard);
+}
+
+function getPrenomen(languageKey, isWizard) {
+    const filtered = getNewObjectForGender(isWizard);
+    return filtered[languageKey]; // e.g., 'english_M' or 'english_F'
+}
+
+const gender = callGender();
+
+// console.log(getPrenomen(english))
+
 // console.log(allPrenomena[28]);
-console.log(filterByGender(allPrenomena[26], true));
-// console.log(allPrenomena[28].english_M[1]);
-// console.log(filterPrenomena());
-console.log(callGender());
-// console.log(filterPrenomena())
-// console.log(callPrenomen(allPrenomena));
-console.log("getNewObject test:")
-console.log(getNewObject())
-console.log("getPrenomen test:")
-console.log(getPrenomen());
+// console.log(filterByGender(allPrenomena[26], true));
+// // console.log(allPrenomena[28].english_M[1]);
+// // console.log(filterPrenomena());
+// console.log(callGender());
+// // console.log(filterPrenomena())
+// // console.log(callPrenomen(allPrenomena));
+// console.log("getNewObject test:")
+// console.log(getNewObject())
+// console.log("getPrenomen test:")
+// console.log(getPrenomen());
