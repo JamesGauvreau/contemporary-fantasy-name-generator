@@ -51,34 +51,14 @@ function callGender() { // * callGender will return a value of true (masc) or fa
     return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
 } 
 
-const whichPrenomenObjectNo = callPrenomenObject();
-const whichNation = callNation();
-const isWizard = callGender();
-const whichGender = isWizard ? '_M' : '_F';
+// const whichPrenomenObjectNo = callPrenomenObject();
+// const whichNation = callNation();
 
-console.log('--- Testing const whichPrenomenObjectNo ---');
-console.log(whichPrenomenObjectNo);
+// const isWizard = callGender();
+// const whichGender = isWizard ? '_M' : '_F';
 
-console.log('--- Testing const whichNation ---');
-console.log(whichNation);
-
-console.log('--- Testing const isWizard ---');
-console.log(isWizard);
-
-console.log('--- Testing const whichGender ---');
-console.log(whichGender);
-
-
-// console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
-// console.log(filterByGender(allPrenomena[whichPrenomenObjectNo], isWizard))
-
-// console.log('--- Testing filterByNation(originalObject, nation) ---');
-// console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
-
-// console.log('--- Testing filterByNation(originalObject, nation) ---');
-// console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
-
-// * Note that separate instances of a filter will grab identical data.
+// console.log('--- Testing const whichPrenomenObjectNo ---');
+// console.log(whichPrenomenObjectNo);
 
 function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
     const result = {};
@@ -97,27 +77,38 @@ function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
     return result;
 }
 
-const filterWrapper = {startsWith: [whichNation],endsWith: [whichGender]};
+console.log('--- TEST START ---')
 
-const resultTestWrapper = filterByKeys(allPrenomena[whichPrenomenObjectNo],filterWrapper);
+const maxRetries = 5;
+let attempts = 0;
+let resultTestWrapper = {};
+let success = false;
+
+while (attempts < maxRetries && !success) {
+    const whichPrenomenObjectNo = callPrenomenObject();
+    const whichNation = callNation();
+    const isWizard = callGender();
+    const whichGender = isWizard ? '_M' : '_F';
+
+    const filterWrapper = { startsWith: [whichNation], endsWith: whichGender };
+
+    resultTestWrapper = filterByKeys(allPrenomena[whichPrenomenObjectNo], filterWrapper);
+
+    if (resultTestWrapper && Object.keys(resultTestWrapper).length > 0) {
+        success = true;
+        console.log('✅ Filtered result');
+    } else {
+        attempts++;
+        console.warn(`⚠️ Attempt ${attempts}: No results found for nation: ${whichNation}, gender: ${whichGender}. Retrying...`);
+    }
+}
+
+function measureWrapper() {
+
+}
 
 console.log('--- Testing filterByKeys testWrapper ---');
 console.log(resultTestWrapper);
 
 // ! Everything above is working well.
-
-function getRandomPrenomenSet() {
-    return allPrenomena[Math.floor(Math.random() * allPrenomena.length)];
-}
-
-function getNewObjectForGender(isWizard) {
-    const randomSet = getRandomPrenomenSet();
-    return filterByGender(randomSet, isWizard);
-}
-
-function getPrenomen(languageKey, isWizard) {
-    const filtered = getNewObjectForGender(isWizard);
-    return filtered[languageKey]; // e.g., 'english_M' or 'english_F'
-}
-
-const gender = callGender();
+// * Note that separate instances of a filter will grab identical data.

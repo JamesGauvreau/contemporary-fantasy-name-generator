@@ -23,6 +23,11 @@ console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
 
 // * Deprecated functions
 
+if (!success) {
+    console.error(`❌ Failed to find results after ${maxRetries} attempts.`);
+    // Optional: fallback logic here
+}
+
 function filterByGender(originalObject, isWizard) { // the second parameter should refer to the output of callGender.
     const genderSuffix = isWizard ? '_M' : '_F';
     const newObject = {};
