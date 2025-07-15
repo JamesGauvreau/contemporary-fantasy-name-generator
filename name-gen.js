@@ -51,47 +51,11 @@ function callGender() { // * callGender will return a value of true (masc) or fa
     return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
 } 
 
-function filterByGender(originalObject, isWizard) { // the second parameter should refer to the output of callGender.
-    const genderSuffix = isWizard ? '_M' : '_F';
-    const newObject = {};
 
-    for (const key in originalObject) {
-        // Check key ends with the appropriate gender suffix
-        if (key.endsWith(genderSuffix)) {
-            const value = originalObject[key];
-
-            // Check value is an array AND contains at least one string
-            if (Array.isArray(value) && value.some(item => typeof item === 'string')) {
-                newObject[key] = value; // Only assign if array includes strings
-            }
-        }
-    }
-
-    return newObject;
-}
-
-function filterByNation(originalObject, nation) { // the second parameter should refer to the output of callGender.
-    const newObject = {};
-
-    for (const key in originalObject) {
-        // Check key ends with the appropriate gender suffix
-        if (key.startsWith(nation)) {
-            const value = originalObject[key];
-
-            // Check value is an array AND contains at least one string
-            if (Array.isArray(value) && value.some(item => typeof item === 'string')) {
-                newObject[key] = value; // Only assign if array includes strings
-            }
-        }
-    }
-
-    return newObject;
-}
 
 const whichPrenomenObjectNo = callPrenomenObject();
 const whichNation = callNation();
 const isWizard = callGender();
-
 
 console.log('--- Testing const whichPrenomenObjectNo ---');
 console.log(whichPrenomenObjectNo);
@@ -103,17 +67,40 @@ console.log('--- Testing const isWizard ---');
 console.log(isWizard);
 
 // console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
-// console.log(filterByGender(allPrenomena[prenomenObjectNo], isWizard))
+// console.log(filterByGender(allPrenomena[whichPrenomenObjectNo], isWizard))
 
 // console.log('--- Testing filterByNation(originalObject, nation) ---');
-// console.log(filterByNation(allPrenomena[prenomenObjectNo], nation));
+// console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
+
+// console.log('--- Testing filterByNation(originalObject, nation) ---');
+// console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
 
 // ! Everything above is working well.
 // ! next step is align the two filters with each other.
+// * Note that separate instances of a filter will grab identical data.
 
+function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
+    const result = {};
 
+    for (const key in originalObject) {
+        const value = originalObject[key];
 
+        const startsOk = startsWith.length === 0 || startsWith.some(prefix => key.startsWith(prefix));
+        const endsOk = endsWith ? key.endsWith(endsWith) : true;
 
+        if (startsOk && endsOk && Array.isArray(value) && value.some(item => typeof item === 'string')) {
+            result[key] = value;
+        }
+    }
+
+    return result;
+}
+
+const result = filterByKeys(allPrenomena[whichPrenomenObjectNo],{startsWith: ['english','scottish'],endsWith: '_M'});
+const result2 = filterByKeys(allPrenomena[whichPrenomenObjectNo],{startsWith: [whichNation],endsWith: ''});
+
+console.log('--- Testing filterByKeys ---');
+console.log(result2);
 
 
 function getRandomPrenomenSet() {
