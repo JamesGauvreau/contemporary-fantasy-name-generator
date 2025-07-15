@@ -1,3 +1,28 @@
+// * Deprecated constants, console.logs
+
+const result = filterByKeys(allPrenomena[whichPrenomenObjectNo],{startsWith: ['english','scottish'],endsWith: '_M'});
+const result2 = filterByKeys(allPrenomena[whichPrenomenObjectNo],{startsWith: [whichNation],endsWith: ''});
+
+console.log('--- Testing const whichNation ---');
+console.log(whichNation);
+
+console.log('--- Testing const isWizard ---');
+console.log(isWizard);
+
+console.log('--- Testing const whichGender ---');
+console.log(whichGender);
+
+console.log('--- Testing filterByGender(allPrenomena[callPrenomenObject], isWizard) ---');
+console.log(filterByGender(allPrenomena[whichPrenomenObjectNo], isWizard))
+
+console.log('--- Testing filterByNation(originalObject, nation) ---');
+console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
+
+console.log('--- Testing filterByNation(originalObject, nation) ---');
+console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
+
+// * Deprecated functions
+
 function filterByGender(originalObject, isWizard) { // the second parameter should refer to the output of callGender.
     const genderSuffix = isWizard ? '_M' : '_F';
     const newObject = {};
