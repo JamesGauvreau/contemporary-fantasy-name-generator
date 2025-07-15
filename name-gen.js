@@ -18,7 +18,7 @@
 //  ? If 1 name, pick it.
 //  ? If 2 names, pick the second.
 //  * Else, Roll Math.random()
-// ? If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
+//  ? If 0.5 or lower, pick first option in array (object_name.english_M || object_name.english_F)
 //  * Else, Roll Math.ceil(Math.random() * names in array)
 //  Use # to pick an option.
 
@@ -111,10 +111,41 @@ function pickObject(obj) {
     return { [randomKey]: obj[randomKey] };
 }
 
+const whichObject = pickObject(resultTestWrapper);
+
+function selectFromSingleKeyObject(obj) {
+  const keys = Object.keys(obj);
+  if (keys.length !== 1) {
+    throw new Error('Object must contain exactly one key.');
+  }
+
+  const values = obj[keys[0]];
+
+  if (!Array.isArray(values) || values.length === 0) {
+    throw new Error('Value must be a non-empty array.');
+  }
+
+  if (values.length === 1) {
+    return values[0];
+  }
+
+  if (Math.random() <= 0.5) {
+    return values[0];
+  } else {
+    const roll = Math.ceil(Math.random() * values.length) - 1;
+    return values[roll];
+  }
+}
+
+
 console.log('--- Testing filterByKeys testWrapper ---');
 console.log(resultTestWrapper);
-console.log('--- Testing pickObject ---');
-console.log(pickObject(resultTestWrapper))
+console.log('--- keyObject ---');
+console.log(selectFromSingleKeyObject(whichObject));
 
 // ! Everything above is working well.
 // * Note that separate instances of a filter will grab identical data.
+
+//  TODO
+//  Remove diminutives (to be re-added later)
+//  Streamline
