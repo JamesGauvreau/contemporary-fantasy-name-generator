@@ -149,3 +149,4 @@ console.log(selectFromSingleKeyObject(whichObject));
 //  TODO
 //  Remove diminutives (to be re-added later)
 //  Streamline
+//  Build the form before going to further steps, to avoid building things that will need to be removed later.
