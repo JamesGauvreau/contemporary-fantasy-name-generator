@@ -103,12 +103,18 @@ while (attempts < maxRetries && !success) {
     }
 }
 
-function measureWrapper() {
+function pickObject(obj) {
+    const keys = Object.keys(obj);
+    if (!keys.length) return null;
 
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return { [randomKey]: obj[randomKey] };
 }
 
 console.log('--- Testing filterByKeys testWrapper ---');
 console.log(resultTestWrapper);
+console.log('--- Testing pickObject ---');
+console.log(pickObject(resultTestWrapper))
 
 // ! Everything above is working well.
 // * Note that separate instances of a filter will grab identical data.

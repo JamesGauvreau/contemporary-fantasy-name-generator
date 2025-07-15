@@ -21,7 +21,15 @@ console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
 console.log('--- Testing filterByNation(originalObject, nation) ---');
 console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
 
+const filterWrapper = {startsWith: [whichNation],endsWith: [whichGender]};
+
 // * Deprecated functions
+
+function measureWrapperObject(obj) {
+    return obj ? Object.keys(obj).length : 0;
+}
+
+const countObject = measureWrapperObject(resultTestWrapper);
 
 if (!success) {
     console.error(`❌ Failed to find results after ${maxRetries} attempts.`);
