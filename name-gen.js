@@ -69,6 +69,12 @@ function callGender() { // * callGender will return a value of true (masc) or fa
     return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
 } 
 
+function removeKeysContaining(obj, substring) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => !key.includes(substring))
+  );
+}
+
 function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
     const result = {};
 
@@ -102,6 +108,7 @@ while (attempts < maxRetries && !success) {
     const filterWrapper = { startsWith: [whichNation], endsWith: whichGender };
 
     resultTestWrapper = filterByKeys(allPrenomena[whichPrenomenObjectNo], filterWrapper);
+    resultTestWrapper = removeKeysContaining(resultTestWrapper, 'diminutive');
 
     if (resultTestWrapper && Object.keys(resultTestWrapper).length > 0) {
         success = true;
@@ -156,9 +163,7 @@ console.log(selectFromSingleKeyObject(whichObject));
 // * Note that separate instances of a filter will grab identical data.
 
 //  TODO
-//  Remove diminutives (to be re-added later)
 //  Streamline
-//  Build the form before going to further steps, to avoid building things that will need to be removed later. 
 
 // ! Workspace below
 
