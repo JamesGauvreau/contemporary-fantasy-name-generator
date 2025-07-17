@@ -1,3 +1,5 @@
+import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
+
 //  TODO
 //  v1      minimum viable product
 //          - press a button, get some names
@@ -8,6 +10,8 @@
 //  v1.x    Add celestial names, etc.
 //  v2      Build diminutives from roots
 //  v3      Work with subtypes
+//  
+//  ?       Check number of options before rolling, let retries = options, if complete failure still then have a pop-up announcing an error, advising the user to change their options.
 
 //  ! PSEUDO 
 //  Check # of objects in super_array
@@ -29,11 +33,25 @@
 //  Import into main js sheet
 //  Test
 
-import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
-
 const allNations = ["english","cornish","french","irish","latin","scottish","welsh"];
 
 // console.log(nameDennis_Denise.english_M[1]);
+
+function getCategorySelections() {
+  const allRadios = document.querySelectorAll('input[type="radio"][name^="category_"]');
+  const selections = {};
+
+  allRadios.forEach(radio => {
+    if (radio.checked) {
+      const category = radio.name.replace('category_', '');
+      selections[category] = radio.value;
+    }
+  });
+
+  return selections;
+}
+
+const whichRadioSelections = getCategorySelections();
 
 function callPrenomenObject() {
     const arrayLength = allPrenomena.length;
@@ -50,15 +68,6 @@ function callNation() {
 function callGender() { // * callGender will return a value of true (masc) or false (fem), to be read by the isWizard parameter in filterByGender.
     return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
 } 
-
-// const whichPrenomenObjectNo = callPrenomenObject();
-// const whichNation = callNation();
-
-// const isWizard = callGender();
-// const whichGender = isWizard ? '_M' : '_F';
-
-// console.log('--- Testing const whichPrenomenObjectNo ---');
-// console.log(whichPrenomenObjectNo);
 
 function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
     const result = {};
@@ -150,3 +159,8 @@ console.log(selectFromSingleKeyObject(whichObject));
 //  Remove diminutives (to be re-added later)
 //  Streamline
 //  Build the form before going to further steps, to avoid building things that will need to be removed later. 
+
+// ! Workspace below
+
+console.log('--- Testing getCategorySelections() ---');
+console.log(whichRadioSelections.gaelic);

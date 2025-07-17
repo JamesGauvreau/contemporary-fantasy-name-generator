@@ -1,127 +1,151 @@
 <!DOCTYPE html>
 
 <head>
-    <script src="name-gen.html" defer></script>
-    <style>
-        .category-grid {
-  display: grid;
-  grid-template-columns: 150px 100px 100px 100px;
-  gap: 5px 10px;
-  align-items: center;
-}
+  <script type="module" src="name-gen.js" defer></script> 
+  <!-- Because the source js file has a module, the whole thing must be labeled as a module -->
+  <style>
+    .category-grid {
+      display: grid;
+      grid-template-columns: 150px 100px 100px 100px;
+      gap: 5px 10px;
+      align-items: center;
+    }
 
-.category-grid .header-row {
-  font-weight: bold;
-  display: contents;
-}
+    .category-grid .header-row {
+      font-weight: bold;
+      display: contents;
+    }
 
-.category-grid .row {
-  display: contents;
-}
-
-    </style>
+    .category-grid .row {
+      display: contents;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>Contemporary Fantasy Name Generator</h1>
+  <h1>Contemporary Fantasy Name Generator</h1>
 
-    <p id="holdName">
-        <span id="holdPrenomen"></span>
-        <span id="holdPostnomen"></span>
-    </p>
+  <p id="holdName">
+    <span id="holdPrenomen"></span>
+    <span id="holdPostnomen"></span>
+  </p>
 
 
-    <form id="customize-output-form">
+  <form id="customize-output-form">
 
-  <!-- Language checkboxes -->
-  <fieldset>
-    <legend>Languages</legend>
-    <label><input type="checkbox" name="languages[]" value="english"> English</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="cornish"> Cornish</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="french"> French</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="irish"> Irish</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="latin"> Latin</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="scottish"> Scottish</label> &ensp;
-    <label><input type="checkbox" name="languages[]" value="welsh"> Welsh</label> &ensp;
-  </fieldset>
-
-  <br>
-
-  <!-- Category radio groups -->
-  <details>
-    <summary>Click for further customization options</summary>
+    <!-- Language checkboxes -->
     <fieldset>
-    <legend>Customize Output</legend>
+      <legend>Languages</legend>
+      <label><input type="checkbox" name="languages[]" value="english"> English</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="cornish"> Cornish</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="french"> French</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="irish"> Irish</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="latin"> Latin</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="scottish"> Scottish</label> &ensp;
+      <label><input type="checkbox" name="languages[]" value="welsh"> Welsh</label> &ensp;
+    </fieldset>
 
-  <div class="category-grid">
-    <div class="header-row">
-      <div>Category</div>
-      <div>Forbidden</div>
-      <div>Permitted</div>
-      <div>Favored</div>
-    </div>
-    
-    <!-- Repeat structure for each category -->
-    <div class="row">Gaelic:
-      <label><input type="radio" name="category_gaelic" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_gaelic" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_gaelic" value="favored"> Favored</label>
-    </div>
+    <br>
 
-    <div class="row">Astronomy:
-      <label><input type="radio" name="category_astronomy" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_astronomy" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_astronomy" value="favored"> Favored</label>
-    </div>
+    <!-- Category radio groups -->
 
-    <div class="row">Modern:
-      <label><input type="radio" name="category_modern" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_modern" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_modern" value="favored"> Favored</label>
-    </div>
+    <ul>
+      <li>Add something about English/non-English in the customization options</li>
+      <li>Also add option to remove/permit/prefer major character names, e.g. Harry, Ron</li>
+      <li>Also an option for permitting/etc variations of these names.</li>
+      <li>Option for diminutives as regular names.</li>
+      <li>Option for (experimental feature!) generated diminutives.</li>
+      <li>Determine likelihood of having a diminutive as "[name]" between first and last name.</li>
+      <li>Option for middle names.</li>
+    </ul>
 
-    <div class="row">Premodern:
-      <label><input type="radio" name="category_premodern" value="forbidden" checked> Forbidden</label>
-      <label><input type="radio" name="category_premodern" value="permitted"> Permitted</label>
-      <label><input type="radio" name="category_premodern" value="favored"> Favored</label>
-    </div>
+    <p>The generated name should probably be in two fields at first, with an option to "lock" either. Later, we can have
+      the fields, but the generated space above this.</p>
 
-    <div class="row">Plant:
-      <label><input type="radio" name="category_plant" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_plant" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_plant" value="favored"> Favored</label>
-    </div>
+    <details>
+      <summary>Click for further customization options</summary>
+      <details>
+        <summary>How to Use</summary>
+        <p>If a trait is <i>Forbidden</i>, then applicable names will be rejected. If <i>Favored</i>, applicable names
+          will have greater odds (but not a guarantee) of being chosen. In most cases, it is recommended that, if you
+          pick a non-English language, you still permit English, because these names still occur in the source data.
+          Only exclude English if (1) you are looking for something very strongly of the selected nation(s) or (2) you
+          feel like doing so. Look, I'm not a cop.</p>
+        <p>Permitting or preferring "Gaelic" does nothing if Irish and/or Scottish names are not checked above.</p>
+        <p>Hover over traits to learn what they mean.</p>
+      </details>
+      <fieldset>
+        <legend>Customize Output</legend>
 
-    <div class="row">Protestant:
-      <label><input type="radio" name="category_protestant" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_protestant" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_protestant" value="favored"> Favored</label>
-    </div>
+        <div class="category-grid">
+          <div class="header-row">
+            <div>Category</div>
+            <div>Forbidden</div>
+            <div>Permitted</div>
+            <div>Favored</div>
+          </div>
 
-    <div class="row">Puritan:
-      <label><input type="radio" name="category_puritan" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_puritan" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_puritan" value="favored"> Favored</label>
-    </div>
+          <!-- Repeat structure for each category -->
+          <div class="row">Gaelic:
+            <label><input type="radio" name="category_gaelic" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_gaelic" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_gaelic" value="favored"> Favored</label>
+          </div>
 
-    <div class="row">Religious:
-      <label><input type="radio" name="category_religious" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_religious" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_religious" value="favored"> Favored</label>
-    </div>
+          <div class="row">Astronomy:
+            <label><input type="radio" name="category_astronomy" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_astronomy" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_astronomy" value="favored"> Favored</label>
+          </div>
 
-    <div class="row">Weird:
-      <label><input type="radio" name="category_weird" value="forbidden"> Forbidden</label>
-      <label><input type="radio" name="category_weird" value="permitted" checked> Permitted</label>
-      <label><input type="radio" name="category_weird" value="favored"> Favored</label>
-    </div>
+          <div class="row">Modern:
+            <label><input type="radio" name="category_modern" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_modern" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_modern" value="favored"> Favored</label>
+          </div>
 
-  </fieldset>
-</form>
-</details>
-<br>
-    <button id="getName">Copy Name</button>
-    <button id="getData">Collect Information</button>
+          <div class="row">Premodern:
+            <label><input type="radio" name="category_premodern" value="forbidden" checked> Forbidden</label>
+            <label><input type="radio" name="category_premodern" value="permitted"> Permitted</label>
+            <label><input type="radio" name="category_premodern" value="favored"> Favored</label>
+          </div>
+
+          <div class="row">Plant:
+            <label><input type="radio" name="category_plant" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_plant" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_plant" value="favored"> Favored</label>
+          </div>
+
+          <div class="row">Protestant:
+            <label><input type="radio" name="category_protestant" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_protestant" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_protestant" value="favored"> Favored</label>
+          </div>
+
+          <div class="row">Puritan:
+            <label><input type="radio" name="category_puritan" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_puritan" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_puritan" value="favored"> Favored</label>
+          </div>
+
+          <div class="row">Religious:
+            <label><input type="radio" name="category_religious" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_religious" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_religious" value="favored"> Favored</label>
+          </div>
+
+          <div class="row">Weird:
+            <label><input type="radio" name="category_weird" value="forbidden"> Forbidden</label>
+            <label><input type="radio" name="category_weird" value="permitted" checked> Permitted</label>
+            <label><input type="radio" name="category_weird" value="favored"> Favored</label>
+          </div>
+
+      </fieldset>
+  </form>
+  </details>
+  <br>
+  <button id="getName">Copy Name</button>
+  <button id="getData">Collect Information</button>
 </body>
 
 
