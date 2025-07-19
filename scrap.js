@@ -23,6 +23,18 @@ console.log(filterByNation(allPrenomena[whichPrenomenObjectNo], whichNation));
 
 const filterWrapper = {startsWith: [whichNation],endsWith: [whichGender]};
 
+// const whichPrenomenObjectNo = callPrenomenObject();
+// const whichNation = callNation();
+
+// const isWizard = callGender();
+// const whichGender = isWizard ? '_M' : '_F';
+
+// console.log('--- Testing const whichPrenomenObjectNo ---');
+// console.log(whichPrenomenObjectNo);
+
+// console.log(nameDennis_Denise.english_M[1]);
+
+
 // * Deprecated functions
 
 function measureWrapperObject(obj) {

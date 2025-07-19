@@ -1,5 +1,3 @@
-import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
-
 //  TODO
 //  v1      minimum viable product
 //          - press a button, get some names
@@ -33,9 +31,15 @@ import allPrenomena from './prenomen-list.js'; // All code in a file whose conte
 //  Import into main js sheet
 //  Test
 
-const allNations = ["english","cornish","french","irish","latin","scottish","welsh"];
+// * --- Imports ---
 
-// console.log(nameDennis_Denise.english_M[1]);
+import allPrenomena from './prenomen-list.js'; // All code in a file whose content is imported will be activated by the import, and the activation will occur before any other code in name-gen.js.
+
+// * --- Constants ---
+
+const allNations = ["english", "cornish", "french", "irish", "latin", "scottish", "welsh"];
+
+// * --- DOM Helpers ---
 
 function getCategorySelections() {
   const allRadios = document.querySelectorAll('input[type="radio"][name^="category_"]');
@@ -51,7 +55,13 @@ function getCategorySelections() {
   return selections;
 }
 
-const whichRadioSelections = getCategorySelections();
+const whichRadioSelections = getCategorySelections(); // * Alter this?
+
+// * --- Utility Functions ---
+
+function capitalize(str) { // ! Ideally we will make this unnecessary by enforcing consistency between radio names and object keys
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 function callPrenomenObject() {
     const arrayLength = allPrenomena.length;
@@ -90,6 +100,18 @@ function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
     }
 
     return result;
+}
+
+function filterByCategoryRestrictions(entries, categorySelections) {
+  return entries.filter(entry => {
+    for (const [category, status] of Object.entries(categorySelections)) {
+      if (status === "forbidden") {
+        const key = `is${capitalize(category)}`;
+        if (entry[key] === true) return false;
+      }
+    }
+    return true;
+  });
 }
 
 console.log('--- TEST START ---')
@@ -132,7 +154,7 @@ const whichObject = pickObject(resultTestWrapper);
 function selectFromSingleKeyObject(obj) {
   const keys = Object.keys(obj);
   if (keys.length !== 1) {
-    throw new Error('Object must contain exactly one key.');
+    throw new Error(`Expected one key but found ${keys.length}: ${keys.join(', ')}`);
   }
 
   const values = obj[keys[0]];
@@ -163,7 +185,11 @@ console.log(selectFromSingleKeyObject(whichObject));
 // * Note that separate instances of a filter will grab identical data.
 
 //  TODO
-//  Streamline
+//  Work on integrating radio buttons
+//  Reorganize if necessary
+//  Read nations from HTML
+  //  Can probably get rid of the nations constant afterward
+//  Add a button to the HTML in order to read the form info and generate a name into the HTML. 
 
 // ! Workspace below
 
