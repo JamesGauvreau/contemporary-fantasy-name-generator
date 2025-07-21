@@ -42,8 +42,16 @@ const allNations = ["english", "cornish", "french", "irish", "latin", "scottish"
 // * --- DOM Helpers ---
 
 function getCategorySelections() {
+  const allCheckboxes = document.querySelectorAll('input[type="checkbox"][name^="language_');
   const allRadios = document.querySelectorAll('input[type="radio"][name^="category_"]');
-  const selections = {};
+  const selections = {  };
+
+  allCheckboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      const category = checkbox.name.replace('language_', '');
+      selections[category] = checkbox.value;
+    }
+  });
 
   allRadios.forEach(radio => {
     if (radio.checked) {
@@ -64,20 +72,20 @@ function capitalize(str) { // ! Ideally we will make this unnecessary by enforci
 }
 
 function callPrenomenObject() {
-    const arrayLength = allPrenomena.length;
-    const rollObject = Math.floor(Math.random() * arrayLength);
-    return rollObject;
+  const arrayLength = allPrenomena.length;
+  const rollObject = Math.floor(Math.random() * arrayLength);
+  return rollObject;
 }
 
 function callNation() {
-    const arrayLength = allNations.length;
-    const rollObject = Math.floor(Math.random() * arrayLength);
-    return allNations[rollObject];
+  const arrayLength = allNations.length;
+  const rollObject = Math.floor(Math.random() * arrayLength);
+  return allNations[rollObject];
 }
 
 function callGender() { // * callGender will return a value of true (masc) or false (fem), to be read by the isWizard parameter in filterByGender.
-    return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
-} 
+  return Math.random() < 0.5; // ? This replaces two rows: {1} const rollGender = Math.floor(Math.random() * 2); {2} return rollGender === 0;
+}
 
 function removeKeysContaining(obj, substring) {
   return Object.fromEntries(
@@ -86,20 +94,20 @@ function removeKeysContaining(obj, substring) {
 }
 
 function filterByKeys(originalObject, { startsWith = [], endsWith = '' } = {}) {
-    const result = {};
+  const result = {};
 
-    for (const key in originalObject) {
-        const value = originalObject[key];
+  for (const key in originalObject) {
+    const value = originalObject[key];
 
-        const startsOk = startsWith.length === 0 || startsWith.some(prefix => key.startsWith(prefix));
-        const endsOk = endsWith ? key.endsWith(endsWith) : true;
+    const startsOk = startsWith.length === 0 || startsWith.some(prefix => key.startsWith(prefix));
+    const endsOk = endsWith ? key.endsWith(endsWith) : true;
 
-        if (startsOk && endsOk && Array.isArray(value) && value.some(item => typeof item === 'string')) {
-            result[key] = value;
-        }
+    if (startsOk && endsOk && Array.isArray(value) && value.some(item => typeof item === 'string')) {
+      result[key] = value;
     }
+  }
 
-    return result;
+  return result;
 }
 
 function filterByCategoryRestrictions(entries, categorySelections) {
@@ -122,31 +130,31 @@ let resultTestWrapper = {};
 let success = false;
 
 while (attempts < maxRetries && !success) {
-    const whichPrenomenObjectNo = callPrenomenObject();
-    const whichNation = callNation();
-    const isWizard = callGender();
-    const whichGender = isWizard ? '_M' : '_F';
+  const whichPrenomenObjectNo = callPrenomenObject();
+  const whichNation = callNation();
+  const isWizard = callGender();
+  const whichGender = isWizard ? '_M' : '_F';
 
-    const filterWrapper = { startsWith: [whichNation], endsWith: whichGender };
+  const filterWrapper = { startsWith: [whichNation], endsWith: whichGender };
 
-    resultTestWrapper = filterByKeys(allPrenomena[whichPrenomenObjectNo], filterWrapper);
-    resultTestWrapper = removeKeysContaining(resultTestWrapper, 'diminutive');
+  resultTestWrapper = filterByKeys(allPrenomena[whichPrenomenObjectNo], filterWrapper);
+  resultTestWrapper = removeKeysContaining(resultTestWrapper, 'diminutive');
 
-    if (resultTestWrapper && Object.keys(resultTestWrapper).length > 0) {
-        success = true;
-        console.log('✅ Filtered result');
-    } else {
-        attempts++;
-        console.warn(`⚠️ Attempt ${attempts}: No results found for nation: ${whichNation}, gender: ${whichGender}. Retrying...`);
-    }
+  if (resultTestWrapper && Object.keys(resultTestWrapper).length > 0) {
+    success = true;
+    console.log('✅ Filtered result');
+  } else {
+    attempts++;
+    console.warn(`⚠️ Attempt ${attempts}: No results found for nation: ${whichNation}, gender: ${whichGender}. Retrying...`);
+  }
 }
 
 function pickObject(obj) {
-    const keys = Object.keys(obj);
-    if (!keys.length) return null;
+  const keys = Object.keys(obj);
+  if (!keys.length) return null;
 
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    return { [randomKey]: obj[randomKey] };
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return { [randomKey]: obj[randomKey] };
 }
 
 const whichObject = pickObject(resultTestWrapper);
@@ -188,10 +196,11 @@ console.log(selectFromSingleKeyObject(whichObject));
 //  Work on integrating radio buttons
 //  Reorganize if necessary
 //  Read nations from HTML
-  //  Can probably get rid of the nations constant afterward
+//  Can probably get rid of the nations constant afterward
 //  Add a button to the HTML in order to read the form info and generate a name into the HTML. 
 
 // ! Workspace below
 
 console.log('--- Testing getCategorySelections() ---');
 console.log(whichRadioSelections.gaelic);
+console.log(whichRadioSelections);
