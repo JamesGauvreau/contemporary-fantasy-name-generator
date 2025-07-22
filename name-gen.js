@@ -122,8 +122,6 @@ function filterByCategoryRestrictions(entries, categorySelections) {
   });
 }
 
-console.log('--- TEST START ---')
-
 const maxRetries = 5;
 let attempts = 0;
 let resultTestWrapper = {};
@@ -183,6 +181,17 @@ function selectFromSingleKeyObject(obj) {
   }
 }
 
+function fullNameBuilder(){
+  return (document.getElementById(
+    "genFullName"
+  ).innerHTML = `<b>Name:</b> ${selectFromSingleKeyObject(whichObject)}.`);
+};
+
+fullNameBuilder();
+
+buttonCharacterGenerator.onclick = fullNameBuilder;
+
+console.log('--- TEST START ---')
 
 console.log('--- Testing filterByKeys testWrapper ---');
 console.log(resultTestWrapper);
@@ -193,11 +202,11 @@ console.log(selectFromSingleKeyObject(whichObject));
 // * Note that separate instances of a filter will grab identical data.
 
 //  TODO
-//  Work on integrating radio buttons
+//  Work on integrating radio buttons into the functions. 
 //  Reorganize if necessary
-//  Read nations from HTML
-//  Can probably get rid of the nations constant afterward
+//  root out the nations constant, callNation(), and whichNation().
 //  Add a button to the HTML in order to read the form info and generate a name into the HTML. 
+//  When the button is clickd, a new name might be generator but only one of a couple of options.
 
 // ! Workspace below
 
